@@ -1,0 +1,42 @@
+C:\Users\Student\Fructs\Bot\Bot\bin\Bot Application.dll.config
+C:\Users\Student\Fructs\Bot\Bot\bin\Bot Application.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Bot Application.pdb
+C:\Users\Student\Fructs\Bot\Bot\bin\Autofac.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Chronic.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.Bot.Builder.Autofac.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.Bot.Builder.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.Bot.Connector.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.Rest.ClientRuntime.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.WindowsAzure.Configuration.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Newtonsoft.Json.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\System.Net.Http.Formatting.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\System.Web.Http.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\System.Web.Http.WebHost.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\Autofac.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.Bot.Builder.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.Bot.Builder.Autofac.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.Bot.Connector.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\Microsoft.WindowsAzure.Configuration.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\Newtonsoft.Json.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\System.Net.Http.Formatting.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\System.Web.Http.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\System.Web.Http.WebHost.xml
+C:\Users\Student\Fructs\Bot\Bot\bin\ar\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\cs\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\de-dE\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\en\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\es\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\fa\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\fr\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\ja\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\ru\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\bin\zh-hans\Microsoft.Bot.Builder.resources.dll
+C:\Users\Student\Fructs\Bot\Bot\obj\Debug\Bot.csprojAssemblyReference.cache
+C:\Users\Student\Fructs\Bot\Bot\obj\Debug\Bot.csproj.CoreCompileInputs.cache
+C:\Users\Student\Fructs\Bot\Bot\obj\Debug\Bot.csproj.CopyComplete
+C:\Users\Student\Fructs\Bot\Bot\obj\Debug\Bot Application.dll
+C:\Users\Student\Fructs\Bot\Bot\obj\Debug\Bot Application.pdb

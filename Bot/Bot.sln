@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bot", "Bot\Bot.csproj", "{A6CCDAE8-08B9-4CC4-92D1-7ECC7F95F666}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6CCDAE8-08B9-4CC4-92D1-7ECC7F95F666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6CCDAE8-08B9-4CC4-92D1-7ECC7F95F666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6CCDAE8-08B9-4CC4-92D1-7ECC7F95F666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6CCDAE8-08B9-4CC4-92D1-7ECC7F95F666}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25274047-3AF7-4C0E-B8C4-69E9D74E2DCF}
+	EndGlobalSection
+EndGlobal
