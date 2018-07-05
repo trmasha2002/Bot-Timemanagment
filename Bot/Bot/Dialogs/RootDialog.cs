@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using Bot_Application2;
 
 namespace Bot.Dialogs
 {
     [Serializable]
     public class RootDialog : IDialog<object>
     {
-        private List<string> todo;
+        public static List<Problem> todo;
+        private List<int> CheckCitats = new List<int>();
+        public static int timeseed;
         private List<string> citats = new List<string>{
         "Это время, как и любое другое, очень удачное, если мы знаем, что с ними делать. Ральф Вальдо Эмерсон",
         "Жить жизнью не имея плана, это все равно что смотреть телевизор, когда пульт находится в чужих руках. Питер Турла",
@@ -48,7 +52,9 @@ namespace Bot.Dialogs
 
         public Task StartAsync(IDialogContext context)
         {
-            todo = new List<string>();
+            for (int i = 0; i < 32; i++)
+                CheckCitats.Add(0);
+            todo = new List<Problem>();
             context.PostAsync("Привет!");
             context.Wait(MessageReceivedAsync);
 
@@ -61,7 +67,7 @@ namespace Bot.Dialogs
             PromptDialog.Choice(
             context: context,
             resume: SecondReceivedAsync,
-            options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день" },
+            options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день", "Настроить напоминание задач" },
             prompt: $"Привет! Хочешь добавить задачу на сегодня",
             promptStyle: PromptStyle.Auto);
 
@@ -84,52 +90,225 @@ namespace Bot.Dialogs
                 }
                 else
                 {
-                    foreach (string task in todo)
+                    string tasks = "";
+                    foreach (Problem task in todo)
                     {
+                        tasks += String.Format("{0}) {1}", number.ToString(), task.Name);
+                        tasks += "\n";
 
-                        await context.PostAsync(number.ToString() + ")  " + task);
                         number++;
                     }
+                    await context.PostAsync(tasks);
                 }
                 PromptDialog.Choice(
                 context: context,
                 resume: SecondReceivedAsync,
-                options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день" },
+                options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день", "Настроить напоминание задач" },
                 prompt: $"Привет! Хочешь добавить задачу на сегодня",
                 promptStyle: PromptStyle.Auto);
             }
             else if (input == "Удалить задачу")
             {
-                int number = 1;
-                foreach (string task in todo)
+                if (todo.Count > 0)
                 {
-
-                    await context.PostAsync(number.ToString() + ")  " + task);
-                    number++;
+                    PromptDialog.Choice(
+                    context: context,
+                    resume: DeleteRecievedMessage,
+                    options: new List<string> { "Удалить одну задачу", "Удалить все задачи", "Удалить задачи за последние сутки" },
+                    prompt: $"Удаление задач",
+                    promptStyle: PromptStyle.Auto);
                 }
-                await context.PostAsync("Какую задачу удалить? Напишите номер:");
-                context.Wait(DeleteTask);
+                else
+                {
+                    await context.PostAsync("Задач нет");
+                    PromptDialog.Choice(
+                    context: context,
+                    resume: SecondReceivedAsync,
+                    options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день", "Настроить напоминание задач" },
+                    prompt: $"Привет! Хочешь добавить задачу на сегодня",
+                    promptStyle: PromptStyle.Auto);
+                }
             }
-            else
+            else if (input == "Мотивирующая цитата на каждый день")
             {
+                if (!CheckCitats.Contains(0))
+                    for (int i = 0; i < 32; i++)
+                        CheckCitats[i] = 0;
+
+
                 Random number = new Random();
-                int ind = citats.Count;
-                ind = number.Next(0, 31);
+                int ind = 0;
+                do
+                {
+                    ind = number.Next(0, 32);
+                    //await context.PostAsync(ind.ToString());
+                }
+                while (CheckCitats[ind] == 1);
+                CheckCitats[ind] = 1;
                 await context.PostAsync(citats[ind]);
+
                 PromptDialog.Choice(
                 context: context,
                 resume: SecondReceivedAsync,
-                options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день" },
+                options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день", "Настроить напоминание задач" },
                 prompt: $"Привет! Хочешь добавить задачу на сегодня",
                 promptStyle: PromptStyle.Auto);
             }
+            else if (input == "Настроить напоминание задач")
+            {
+
+                if (todo.Count > 0)
+                {
+                    PromptDialog.Text(
+                    context: context,
+                    resume: TextReceivedAsync,
+                    prompt: "Введите в формате \"HH:MM:SS\"время, через которое будет происходить напоминание:"); ;
+                }
+                else
+                {
+                    await context.PostAsync("Задач нет");
+                    PromptDialog.Choice(
+                    context: context,
+                    resume: SecondReceivedAsync,
+                    options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день", "Настроить напоминание задач" },
+                    prompt: $"Привет! Хочешь добавить задачу на сегодня",
+                    promptStyle: PromptStyle.Auto);
+                }
+            }
+        }
+        private async Task DeleteRecievedMessage(IDialogContext context, IAwaitable<string> result)
+        {
+            string input = await result;
+            if (input == "Удалить одну задачу")
+            {
+                if (todo.Count > 0)
+                {
+                    int number = 1;
+                    string tasks = "";
+                    foreach (Problem task in todo)
+                    {
+                        tasks += String.Format("{0}) {1}", number.ToString(), task.Name);
+                        tasks += "\n";
+
+                        number++;
+                    }
+                    await context.PostAsync(tasks);
+
+                    await context.PostAsync("Какую задачу удалить? Напишите номер:");
+                    context.Wait(DeleteTask);
+                }
+            }
+            else if(input == "Удалить все задачи") 
+            {
+                todo.Clear();
+                await context.PostAsync("Задачи все успешно удалены!");
+
+                PromptDialog.Choice(
+                    context: context,
+                    resume: SecondReceivedAsync,
+                    options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день", "Настроить напоминание задач" },
+                    prompt: $"Привет! Хочешь добавить задачу на сегодня",
+                    promptStyle: PromptStyle.Auto);
+            }
+            else
+            {
+                int number = 0;
+                List<Problem> todo_time = new List<Problem>();
+                Datatime thistime = new Datatime();
+                for (int i = 0; i < todo.Count; i++)
+                {
+                    Problem task = todo[i];
+                    if (task.Add_time.Day != thistime.Day)
+                    {
+                        todo_time.Add(task);
+                    }
+                    number++;
+                }
+                todo.Clear();
+                for (int i = 0; i < todo_time.Count; i++)
+                {
+                    todo.Add(todo_time[i]);
+                }
+                todo_time.Clear();
+                    if (todo.Count > 0)
+                {
+                    number = 1;
+                    string tasks = "";
+                    foreach (Problem task in todo)
+                    {
+                        tasks += String.Format("{0}) {1}", number.ToString(), task.Name);
+                        tasks += "\n";
+
+                        number++;
+                    }
+                    await context.PostAsync(tasks);
+                }
+                else
+                {
+                    await context.PostAsync("Задачи все успешно удалены!");
+                }
+                PromptDialog.Choice(
+                context: context,
+                resume: SecondReceivedAsync,
+                options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день", "Настроить напоминание задач" },
+                prompt: $"Привет! Хочешь добавить задачу на сегодня",
+                promptStyle: PromptStyle.Auto);
+            }
+        }
+        private async Task TextReceivedAsync(IDialogContext context, IAwaitable<string> result)
+        {
+            string input = await result;
+            Regex need = new Regex(@"^[0-9]{2}:[0-9]{2}:[0-9]{2}");
+
+            if (need.IsMatch(input))
+            {
+                string hours = "", minutes = "", seconds = "";
+                hours += input[0];
+                hours += input[1];
+                minutes += input[3];
+                minutes += input[4];
+                seconds += input[6];
+                seconds += input[7];
+                int t;
+                Int32.TryParse(hours, out t);
+                t *= 3600000;
+                timeseed += t;
+                Int32.TryParse(minutes, out t);
+                t *= 60000;
+                timeseed += t;
+                Int32.TryParse(seconds, out t);
+                t *= 1000;
+                timeseed += t;
+
+                await MessagesController.Starttimer(timeseed);
+
+
+                await context.PostAsync(String.Format("Oк! Напоминание каждые {0} установлено. Для прекращения напоминания напишите \"Стоп\"", input));
+
+                PromptDialog.Choice(
+                    context: context,
+                    resume: SecondReceivedAsync,
+                    options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата", "Настроить напоминание задач" },
+                    prompt: $"Привет! Хочешь добавить задачу на сегодня",
+                    promptStyle: PromptStyle.Auto);
+            }
+
+            else
+            {
+                await context.PostAsync("Ввод некоректен. Попробуйте еще раз:");
+                PromptDialog.Text(
+                    context: context,
+                    resume: TextReceivedAsync,
+                    prompt: "Введите в формате \"ЧЧ:ММ:СС\" время, через которое будет происходить напоминание:");
+            }
+
         }
         private async Task AddToList(IDialogContext context, IAwaitable<IMessageActivity> result)
         {
 
             IMessageActivity input2 = await result;
-
-            todo.Add(input2.Text);
+            Problem a = new Problem(input2);
+            todo.Add(a);
 
             PromptDialog.Choice(
             context: context,
@@ -154,7 +333,7 @@ namespace Bot.Dialogs
                 PromptDialog.Choice(
                 context: context,
                 resume: SecondReceivedAsync,
-                options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день" },
+                options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата", "Настроить напоминание задач" },
                 prompt: $"Привет! Хочешь добавить задачу на сегодня",
                 promptStyle: PromptStyle.Auto);
             }
@@ -169,23 +348,28 @@ namespace Bot.Dialogs
 
             if (Int32.TryParse(input2.Text, out res))
             {
-                todo.RemoveAt(res - 1);
-                number = 1;
-                foreach (string task in todo)
+                if (res <= todo.Count && res >= 1)
                 {
+                    todo.RemoveAt(res - 1);
+                    number = 1;
+                    string tasks = "";
+                    foreach (Problem task in todo)
+                    {
+                        tasks += String.Format("{0}) {1}", number.ToString(), task.Name);
+                        tasks += "\n";
 
-                    await context.PostAsync(number.ToString() + ")  " + task);
-                    number++;
+                        number++;
+                    }
+                    await context.PostAsync(tasks);
                 }
+                else
+                    await context.PostAsync("Такой задачи нет");
             }
-            else
-            {
-                await context.PostAsync("Такой задачи нет");
-            }
+
             PromptDialog.Choice(
             context: context,
             resume: SecondReceivedAsync,
-            options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день" },
+            options: new List<string> { "Добавить задачу", "Посмотреть задачи на сегодня", "Удалить задачу", "Мотивирующая цитата на каждый день", "Настроить напоминание задач" },
             prompt: $"Привет! Хочешь добавить задачу на сегодня",
             promptStyle: PromptStyle.Auto);
 
