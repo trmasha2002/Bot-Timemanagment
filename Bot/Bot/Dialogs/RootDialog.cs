@@ -198,7 +198,7 @@ namespace Bot.Dialogs
                     context.Wait(DeleteTask);
                 }
             }
-            else if(input == "Удалить все задачи") 
+            else if (input == "Удалить все задачи")
             {
                 todo.Clear();
                 await context.PostAsync("Задачи все успешно удалены!");
@@ -230,7 +230,7 @@ namespace Bot.Dialogs
                     todo.Add(todo_time[i]);
                 }
                 todo_time.Clear();
-                    if (todo.Count > 0)
+                if (todo.Count > 0)
                 {
                     number = 1;
                     string tasks = "";

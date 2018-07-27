@@ -29,6 +29,7 @@ namespace Bot_Application2
 
 
             // Start the timer 
+            aTimer.AutoReset = true;
             aTimer.Enabled = true;
             aTimer.Start();
         }
@@ -54,7 +55,10 @@ namespace Bot_Application2
             act = activity;
             if (activity.Text == "Стоп" || activity.Text == "стоп")
             {
+
                 aTimer.Stop();
+                aTimer.Interval = 0;
+                aTimer.Elapsed -= OnTimedEvent;
 
                 //seed = RootDialog.timeseed;
                 //await Starttimer(seed);

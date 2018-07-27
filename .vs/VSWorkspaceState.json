@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Bot",
+    "\\Bot\\Bot",
+    "\\Bot\\Bot\\Controllers",
+    "\\Bot\\Bot\\Dialogs"
+  ],
+  "SelectedNode": "\\Bot\\Bot\\Dialogs\\RootDialog.cs",
+  "PreviewInSolutionExplorer": false
+}
